@@ -1,20 +1,20 @@
 %define debug_package %{nil}
 
-Summary:	   Statistics collection daemon for filling RRD files.
-Name:		   collectd
-Version:	   5.4.0
-Release:	   1%{?dist}
-Source:		   http://collectd.org/files/%{name}-%{version}.tar.gz
-License:	   GPL
-Group:		   System Environment/Daemons
-BuildRoot:	   %{_tmppath}/%{name}-%{version}-root
-BuildRequires:     libpcap-devel, libstatgrab-devel
-BuildRequires:     libxml2-devel, libiptcdata-devel, iptables-devel
-BuildRequires:     curl-devel,libidn-devel,openssl-devel
-BuildRequires:     libesmtp-devel, ganglia-devel, libgcrypt-devel
-BuildRequires:     yajl-devel, lvm2-devel
-Requires:	   libstatgrab
-Vendor:		   collectd development team <collectd@verplant.org>
+Summary:       Statistics collection daemon for filling RRD files.
+Name:          collectd
+Version:       5.4.1
+Release:       1%{?dist}
+Source:        http://collectd.org/files/%{name}-%{version}.tar.gz
+License:       GPL
+Group:         System Environment/Daemons
+BuildRoot:     %{_tmppath}/%{name}-%{version}-root
+BuildRequires: libpcap-devel, libstatgrab-devel
+BuildRequires: libxml2-devel, libiptcdata-devel, iptables-devel
+BuildRequires: curl-devel,libidn-devel,openssl-devel
+BuildRequires: libesmtp-devel, ganglia-devel, libgcrypt-devel
+BuildRequires: yajl-devel, lvm2-devel
+Requires:      libstatgrab
+Vendor:        collectd development team <collectd@verplant.org>
 
 
 %description
@@ -24,6 +24,14 @@ is written in C for performance. Since the daemon doesn't need to startup
 every time it wants to update the values it's very fast and easy on the
 system. Also, the statistics are very fine grained since the files are updated
 every 10 seconds.
+
+%package amqp
+Summary:  amqp-plugin for collectd.
+Group:    System Environment/Daemons
+Requires: collectd = %{version}, librabbitmq
+BuildRequires: librabbitmq-devel
+%description amqp
+This plugin collects data from the amqp messaging system
 
 
 %package apache
@@ -265,7 +273,7 @@ exit 0
 
 %files
 %defattr(-,root,root)
-%doc AUTHORS COPYING ChangeLog INSTALL NEWS README
+%doc AUTHORS COPYING ChangeLog NEWS README
 %config %attr(0644,root,root) /etc/collectd.conf
 %attr(0755,root,root) /etc/rc.d/init.d/collectd
 %attr(0755,root,root) %{_sbindir}/collectd
@@ -293,7 +301,6 @@ exit 0
 %attr(0644,root,root) %{_libdir}/%{name}/%1.la
 
 %plugin_macro aggregation
-%plugin_macro amqp
 %plugin_macro apcups
 %plugin_macro ascent
 %plugin_macro bind
@@ -372,6 +379,9 @@ exit 0
 %attr(0644,root,root) %{_datadir}/%{name}/types.db
 %exclude /usr/lib64/perl5/perllocal.pod
 %dir /var/lib/collectd
+
+%files amqp
+%plugin_macro amqp
 
 %files apache
 %plugin_macro apache
@@ -454,6 +464,10 @@ exit 0
 %plugin_macro varnish
 
 %changelog
+* Tue Feb 04 2014 Ulrich Habel <rhaen@pkgbox.de> 5.4.1-1
+- updated to upstream 5.4.1
+- added amqp support (thanks jeff.oconnell@gmail.com)
+
 * Mon Aug 19 2013 Ulrich Habel <rhaen@pkgbox.de> 5.4.0-1
 - updated to upstream 5.4.0
 - enabled cgroups
