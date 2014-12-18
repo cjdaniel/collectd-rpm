@@ -223,7 +223,7 @@ rm -rf %{buildroot}
 %setup
 
 %build
-%configure --with-java=/usr/lib/jvm/java-1.6.0-openjdk-1.6.0.0.x86_64 --enable-java --disable-battery
+%configure --with-java=/usr/lib/jvm/java-1.6.0-openjdk.x86_64/ --enable-java --disable-battery
 make %{?_smp_mflags}
 
 %install
