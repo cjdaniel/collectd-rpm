@@ -55,6 +55,7 @@ Summary:	All the stuff from the contrib directory
 Group:		System Environment/Daemons
 Requires:	collectd = %{version}, perl(Regexp::Common)
 BuildRequires: perl(Mail::SpamAssassin::Logger), perl(Mail::SpamAssassin::Plugin)
+AutoReqProv: no
 %description contrib
 This package contains all the stuff from the contrib packages.
 
