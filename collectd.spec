@@ -177,6 +177,15 @@ The python plugin embeds a python interpreter into collectd and provides an
 interface to the collectd's plugin system. This makes it possible to write
 collectd plugins in the python language.
 
+%package redis
+Summary:    redis and write_redis plugins for collectd.
+Group:		System Environment/Daemons
+Requires:	collectd = %{version}, credis
+BuildRequires: credis-devel
+%description redis
+These plugins query redis for status information (redis plugin), and write
+collectd stats to redis (write_redis plugin).
+
 %package rrdtool
 Summary:	rrd-plugin for collectd.
 Group:		System Environment/Daemons
@@ -449,6 +458,10 @@ exit 0
 #%config %attr(0644,root,root) /etc/collectd.d/postgresql.conf
 /usr/share/collectd/postgresql_default.conf
 %plugin_macro postgresql
+
+%files redis
+%plugin_macro redis
+%plugin_macro write_redis
 
 %files rrdtool
 %plugin_macro rrdtool
